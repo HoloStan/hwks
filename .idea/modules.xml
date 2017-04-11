@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/hk.frame/hk.frame.iml" filepath="$PROJECT_DIR$/hk.frame/hk.frame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hk.redis/hk.redis.iml" filepath="$PROJECT_DIR$/hk.redis/hk.redis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hk.route/hk.route.iml" filepath="$PROJECT_DIR$/hk.route/hk.route.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hk.shiro/hk.shiro.iml" filepath="$PROJECT_DIR$/hk.shiro/hk.shiro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hk.task/hk.task.iml" filepath="$PROJECT_DIR$/hk.task/hk.task.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hwks.iml" filepath="$PROJECT_DIR$/hwks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pom.parent/pom.parent.iml" filepath="$PROJECT_DIR$/pom.parent/pom.parent.iml" />
+    </modules>
+  </component>
+</project>

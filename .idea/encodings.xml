@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hk.frame" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hk.frame/src/main/java/me/holostan/hk/framework/mvc/Dao.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hk.frame/src/main/java/me/holostan/hk/framework/mvc/Entity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hk.frame/src/main/resources/config/dataSource/jdbc.properties" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hk.frame/src/main/resources/config/spring" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hk.frame/src/main/resources/log4j.properties" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hk.redis" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hk.route" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hk.route/src/main/resources/config/spring/applicationContext-route.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hk.shiro" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hk.task" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pom.parent" charset="UTF-8" />
+  </component>
+</project>

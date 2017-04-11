@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="  
+    http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans.xsd  
+    http://www.springframework.org/schema/tx   
+    http://www.springframework.org/schema/tx/spring-tx.xsd   
+    http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd  
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- 6.使用Mybatis管理动态数据源 -->
+	
+	<!-- 创建SqlSessionFactory，同时指定数据源 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="singleDataSource" />
+		<!-- 指定myBatis的总装配置文件 -->
+		<property name="configLocation" value="classpath:config/mybatis/mybatis-config.xml" />
+		<property name="mapperLocations"	value="classpath*:/me/holostan/**/dao/mapper/*Mapper.xml" />
+	</bean>
+
+	<!-- Mapper接口所在包名，Spring会自动查找其下的Mapper -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="me.holostan.hk.**.dao" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- 7.动态事物管理（无法实现全局动态事物管理） -->
+	<!-- 申明獨立事務  -->
+	<bean id="singleDataSourceTx" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	  <property name="dataSource">
+			<ref bean="singleDataSource" />
+	  </property>
+	</bean>
+
+	<!--     配置事务回滚的通知   -->
+	<tx:advice id="txAdvice" transaction-manager="singleDataSourceTx">
+	  <tx:attributes>
+	    <tx:method name="*" rollback-for="java.lang.Exception"/>
+	  </tx:attributes>
+	</tx:advice>
+	<!--   指定那些类的哪些方法参与事务   -->
+	<aop:config>
+		<aop:pointcut id="txPoint" expression="@annotation(org.springframework.transaction.annotation.Transactional)" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* me.holostan..service.impl.save*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* me.holostan..service.impl.create*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* me.holostan..service.impl.insert*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* me.holostan..service.impl.delete*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* me.holostan..service.impl.update*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* me.holostan..service.impl.batch*(..))"/>
+	</aop:config>
+
+</beans>  
