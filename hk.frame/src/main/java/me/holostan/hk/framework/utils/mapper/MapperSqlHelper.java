@@ -4,6 +4,7 @@ import me.holostan.hk.framework.mvc.Entity;
 import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -36,6 +37,43 @@ public class MapperSqlHelper {
 			}
 		}
 		return name;
+	}
+
+	/**
+	 * 根据属性获取PK名
+	 * @param field
+	 * @return
+	 */
+	public static <T extends Entity> Map<String,String> getPKAndValue(T entity) {
+		String name = null;
+		String value = null;
+		Map<String,String> keyAndValue = new HashMap<String, String>();
+		Class clazz = entity.getClass();
+		Field[] fileds = clazz.getDeclaredFields();
+		for(Field field : fileds){
+			field.setAccessible(true);
+			if(!field.isAnnotationPresent(Id.class)){
+				continue;
+			}else{
+				if(!field.isAnnotationPresent(Column.class)){
+					name = field.getName();
+				}else{
+					Column column = field.getAnnotation(Column.class);
+					if(StringUtils.isBlank(column.name())){
+						name = field.getName();
+					}else{
+						name = column.name();
+					}
+				}
+				try {
+					value = (String) field.get(entity);
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
+				keyAndValue.put(name, value);
+			}
+		}
+		return keyAndValue;
 	}
 
 	/**
@@ -128,7 +166,14 @@ public class MapperSqlHelper {
 		}
 		return fieldNames;
 	}
-	
+
+	/**
+	 * convert entity to field and value map.
+	 * @param entity
+	 * @param validate true to filter null value.
+	 * @param <T>
+	 * @return
+	 */
 	public static <T extends Entity> Map<String,String> getColumnsAndFieldNames(T entity,boolean validate){
 		Map<String,String> columnsAndFieldNames = null;
 		Class<?> clazz = entity.getClass();

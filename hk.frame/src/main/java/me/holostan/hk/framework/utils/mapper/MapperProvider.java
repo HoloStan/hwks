@@ -25,9 +25,7 @@ public class MapperProvider {
 			columns.add(entry.getKey());
 			fieldNames.add(entry.getValue());
 		}
-		//拼接表名，可通过[JPA]@Table(name="")注解，默认使用类名
-		//拼接列名
-		//拼接值
+		//拼接表名 列名 值，可通过[JPA]@Table(name="")注解，默认使用类名
 		sqlBuffer.append(tableName).append(" ( ").append(StringUtil.parseList(columns)).append(" ) VALUES ( ").append(StringUtil.parseList(fieldNames)).append(" ) ");
 		logger.debug(sqlBuffer);
 		return sqlBuffer.toString();
@@ -38,9 +36,8 @@ public class MapperProvider {
 		
 	}
 
-	public String save(Entity t) {
+	public <T extends Entity> String save(T entity) {
 		return "";
-		
 	}
 
 	public String batchSave(List<Entity> tList) {
@@ -48,7 +45,10 @@ public class MapperProvider {
 		
 	}
 
-	public String delete(Integer id) {
+	public <T extends Entity> String delete(T entity) {
+		Class<? extends Entity> clazz = entity.getClass();
+		StringBuffer sqlBuffer = new StringBuffer("DELETE FROM ");
+		String tableName = MapperSqlHelper.getTable(clazz);
 		return "";
 		
 	}
@@ -58,9 +58,15 @@ public class MapperProvider {
 		
 	}
 
-	public String update(Entity t) {
-		return "";
-		
+	public <T extends Entity> String update(T entity) {
+		Class<? extends Entity> clazz = entity.getClass();
+		StringBuffer sqlBuffer = new StringBuffer("UPDATE ");
+		String tableName = MapperSqlHelper.getTable(clazz);
+		Map<String,String> columnsAndFieldNames = MapperSqlHelper.getColumnsAndFieldNames(entity,true);
+		Map<String,String> pkAndValue = MapperSqlHelper.getPKAndValue(entity);
+		sqlBuffer.append(tableName).append(" SET ").append(StringUtil.parseMap(columnsAndFieldNames,pkAndValue.keySet())).append(" WHERE ").append(StringUtil.parseMap(pkAndValue));
+		logger.debug(sqlBuffer);
+		return sqlBuffer.toString();
 	}
 
 	public String batchUpdate(List<Entity> tList) {

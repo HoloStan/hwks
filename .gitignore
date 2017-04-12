@@ -1,0 +1,29 @@
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+logs/
+target/
+
+# Test
+test-output/
+
+# git
+*.orig
+
+# Zhu Kai
+src/main/resources/config/zhukai.properties
+
+#Peter Yu
+peteryu/

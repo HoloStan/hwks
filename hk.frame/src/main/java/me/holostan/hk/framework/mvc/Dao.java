@@ -85,4 +85,13 @@ public interface Dao<T extends Entity,PK extends Serializable> {
     
     void pageList();
 
+    /**
+     * execute custom sql and return one expected result.
+     * @param sql
+     * @param resultSet
+     * @param <E>
+     * @return
+     */
+    T execute(String sql,Class<T> result);
+
 }

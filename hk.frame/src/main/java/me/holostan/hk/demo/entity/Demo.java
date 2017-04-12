@@ -2,11 +2,13 @@ package me.holostan.hk.demo.entity;
 
 import me.holostan.hk.framework.mvc.Entity;
 
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name="demo_tmp")
 public class Demo extends Entity {
-	
+
+	@Id
 	Integer id;
 	String uuid;
 	String name;
